@@ -10,7 +10,7 @@ import com.lordbao.utils.Status;
  * MyList的抽象接口, 注意下标都是从0开始
  */
 public interface MyList<E> {
-    Status initList();
+
     Status clearList();
 
     /**

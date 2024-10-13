@@ -11,6 +11,8 @@ import java.util.Objects;
  * @Author Lord_Bao
  * @Date 2024/10/2 21:22
  * @Version 1.0
+ *
+ * 仅支持类型为Integer的静态顺序表
  */
 @Slf4j
 public class IntSqlList implements MyList<Integer> {
@@ -26,13 +28,12 @@ public class IntSqlList implements MyList<Integer> {
         return size==maxSize;
     }
 
-    @Override
-    public Status initList() {
+
+    private void initList() {
         for(int i=0;i<maxSize;i++){
             data[i]=0;
         }
         size=0;
-        return Status.OK;
     }
 
     @Override
@@ -48,7 +49,6 @@ public class IntSqlList implements MyList<Integer> {
     @Override
     public Status insertList(int i, Integer ele) {
         if(i<0 || i>size){
-            log.error("insertList fails!");
             log.error("The position {} is out of index between 0 and {}",i,size);
             return Status.OVERFLOW;
         }
@@ -72,7 +72,6 @@ public class IntSqlList implements MyList<Integer> {
     @Override
     public Integer deleteList(int i) {
         if(i<0 || i>size-1){
-            log.error("deleteList fails!");
             log.error("The position {} is out of index between 0 and {}",i,size-1);
             return null;
         }
@@ -110,7 +109,6 @@ public class IntSqlList implements MyList<Integer> {
     @Override
     public Integer getElem(int i) {
         if(i<0 || i>size-1){
-            log.error("getElem fails!");
             log.error("The position {} is out of index between 0 and {}",i,size-1);
             return null;
         }

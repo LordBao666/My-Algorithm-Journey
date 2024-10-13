@@ -12,6 +12,8 @@ import java.util.Objects;
  * @Author Lord_Bao
  * @Date 2024/10/2 23:03
  * @Version 1.0
+ *
+ * 动态顺序表,支持动态缩容和扩容，支持泛型
  */
 @Slf4j
 public class MySqlList<E> implements MyList<E> {
@@ -30,12 +32,10 @@ public class MySqlList<E> implements MyList<E> {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    public Status initList() {
+    public void initList() {
         data = (E[])new Object[capacity];
         Arrays.fill(data,null);
         size=0;
-        return Status.OK;
     }
 
     @Override
@@ -51,7 +51,6 @@ public class MySqlList<E> implements MyList<E> {
     @Override
     public Status insertList(int i, E e) {
         if(i<0 || i>size){
-            log.error("insertList fails!");
             log.error("The position {} is out of index between 0 and {}",i,size);
             return Status.OVERFLOW;
         }
@@ -90,7 +89,6 @@ public class MySqlList<E> implements MyList<E> {
     @Override
     public E deleteList(int i) {
         if(i<0 || i>size-1){
-            log.error("deleteList fails!");
             log.error("The position {} is out of index between 0 and {}",i,size-1);
             return null;
         }
@@ -139,7 +137,6 @@ public class MySqlList<E> implements MyList<E> {
     @Override
     public E getElem(int i) {
         if(i<0 || i>size-1){
-            log.error("getElem fails!");
             log.error("The position {} is out of index between 0 and {}",i,size-1);
             return null;
         }
