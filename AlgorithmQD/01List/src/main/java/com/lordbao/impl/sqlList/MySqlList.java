@@ -6,6 +6,7 @@ import com.lordbao.utils.Status;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -156,5 +157,44 @@ public class MySqlList<E> implements MyList<E> {
         }
         sb.append(data[size-1]).append(" }");
         return sb.toString();
+    }
+
+
+    /**时间复杂度为O(n) 效率不高*/
+    @Override
+    public Status addFirst(E e) {
+        return insertList(0,e);
+    }
+
+    @Override
+    public Status addLast(E e) {
+        return insertList(size,e);
+    }
+    /**时间复杂度为O(n) 效率不高*/
+    @Override
+    public E removeFirst() {
+        return deleteList(0);
+    }
+
+    @Override
+    public E removeLast() {
+        return deleteList(size-1);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private int count = 0;
+
+            @Override
+            public boolean hasNext() {
+                return count < size;
+            }
+
+            @Override
+            public E next() {
+                return data[count++];
+            }
+        };
     }
 }

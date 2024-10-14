@@ -37,4 +37,12 @@ class MySqlListTest {
             list.deleteList(0);
         }
     }
+
+    @Test
+    void iterator() {
+        setUp();
+        for (Integer e :list){
+            System.out.println(e);
+        }
+    }
 }

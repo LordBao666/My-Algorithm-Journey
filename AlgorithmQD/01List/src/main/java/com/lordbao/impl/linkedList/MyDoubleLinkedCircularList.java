@@ -6,8 +6,7 @@ import com.lordbao.utils.LinkedListInitType;
 import com.lordbao.utils.Status;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -18,11 +17,30 @@ import java.util.Objects;
  * 双向循环链表
  */
 @Slf4j
-public class MyDoubleLinkedCircularList<E>  implements MyList<E> {
+public class MyDoubleLinkedCircularList<E>  implements MyList<E>{
     /**结点个数*/
     private int size;
     /**头结点*/
     private MyDoubleNode head;
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private MyDoubleNode p = head.next;
+
+            @Override
+            public boolean hasNext() {
+                return p != head;
+            }
+
+            @Override
+            public E next() {
+                E data = p.data;
+                p = p.next;
+                return data;
+            }
+        };
+    }
 
 
     public class MyDoubleNode{
@@ -77,62 +95,62 @@ public class MyDoubleLinkedCircularList<E>  implements MyList<E> {
     }
 
 
-
+    @SuppressWarnings("unchecked")
     public MyDoubleLinkedCircularList(){
-        this(new ArrayList<>());
+        this((E[]) new Object[]{});
     }
 
     /***
      * 默认采用尾插法
      */
-    public MyDoubleLinkedCircularList(List<E> list){
-        this(LinkedListInitType.TAIL_INSERT,list);
+    public MyDoubleLinkedCircularList(E [] arr){
+        this(LinkedListInitType.TAIL_INSERT,arr);
     }
 
     /**
      * @param type 尾插法还是头插法
-     * @param list 将要插入的数据集
+     * @param arr 将要插入的数据集
      */
-    public MyDoubleLinkedCircularList(LinkedListInitType type, List<E> list) {
+    public MyDoubleLinkedCircularList(LinkedListInitType type, E [] arr) {
         if (type == LinkedListInitType.HEAD_INSERT) {
-            headInsert(list);
+            headInsert(arr);
         } else if (type == LinkedListInitType.TAIL_INSERT) {
-            tailInsert(list);
+            tailInsert(arr);
         }
     }
 
 
     /**
-     * @param list 将进行尾插法的list
+     * @param arr 将进行尾插法的arr
      *             尾插建表
      */
-    private void tailInsert(List<E> list) {
+    private void tailInsert(E [] arr) {
         head = new MyDoubleNode(null,null, null);
         head.prev=head;
         head.next=head;
-        for (E ele : list) {
+        for (E ele : arr) {
             MyDoubleNode q = new MyDoubleNode(ele,head.prev,head);
             head.prev.next=q;
             head.prev=q;
         }
-        size = list.size();
+        size = arr.length;
     }
 
     /**
-     * @param list 将进行头插法的list
+     * @param arr 将进行头插法的arr
      *             头插建表
      */
-    private void headInsert(List<E> list) {
+    private void headInsert(E [] arr) {
         head = new MyDoubleNode(null,null, null);
         head.prev=head;
         head.next=head;
 
-        for (E ele : list) {
+        for (E ele : arr) {
             MyDoubleNode q = new MyDoubleNode(ele,head,head.next);
             head.next.prev=q;
             head.next=q;
         }
-        size = list.size();
+        size = arr.length;
     }
 
     @Override
@@ -232,18 +250,22 @@ public class MyDoubleLinkedCircularList<E>  implements MyList<E> {
         return sb.toString();
     }
 
+    @Override
     public Status addFirst(E e){
         return insertList(0,e);
     }
 
+    @Override
     public E removeFirst(){
         return deleteList(0);
     }
 
+    @Override
     public Status addLast(E e){
         return insertList(size,e);
     }
 
+    @Override
     public E removeLast(){
         return deleteList(size-1);
     }

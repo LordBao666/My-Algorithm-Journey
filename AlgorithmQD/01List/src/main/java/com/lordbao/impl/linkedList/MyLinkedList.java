@@ -6,8 +6,7 @@ import com.lordbao.utils.LinkedListInitType;
 import com.lordbao.utils.Status;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -64,54 +63,55 @@ public class MyLinkedList<E> implements MyList<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public MyLinkedList() {
-        this(new ArrayList<>());
+        this((E [])new Object[]{});
     }
 
     /***
      * 默认采用尾插法
      */
-    public MyLinkedList(List<E> list) {
-        this(LinkedListInitType.TAIL_INSERT, list);
+    public MyLinkedList(E [] arr) {
+        this(LinkedListInitType.TAIL_INSERT, arr);
     }
 
     /**
      * @param type 尾插法还是头插法
-     * @param list 将要插入的数据集
+     * @param arr 将要插入的数据集
      */
-    public MyLinkedList(LinkedListInitType type, List<E> list) {
+    public MyLinkedList(LinkedListInitType type, E [] arr) {
         if (type == LinkedListInitType.HEAD_INSERT) {
-            headInsert(list);
+            headInsert(arr);
         } else if (type == LinkedListInitType.TAIL_INSERT) {
-            tailInsert(list);
+            tailInsert(arr);
         }
     }
 
     /**
-     * @param list 将进行尾插法的list
+     * @param arr 将进行尾插法的arr
      *             尾插建表
      */
-    private void tailInsert(List<E> list) {
+    private void tailInsert(E [] arr) {
         head = new MyNode(null, null);
         MyNode p = head;
-        for (E ele : list) {
+        for (E ele : arr) {
             MyNode temp = new MyNode(ele, null);
             p.next = temp;
             p = temp;
         }
-        size = list.size();
+        size = arr.length;
     }
 
     /**
-     * @param list 将进行头插法的list
+     * @param arr 将进行头插法的list
      *             头插建表
      */
-    private void headInsert(List<E> list) {
+    private void headInsert(E [] arr) {
         head = new MyNode(null, null);
-        for (E ele : list) {
+        for (E ele : arr) {
             head.next = new MyNode(ele, head.next);
         }
-        size = list.size();
+        size = arr.length;
     }
 
 
@@ -203,11 +203,31 @@ public class MyLinkedList<E> implements MyList<E> {
         return sb.toString();
     }
 
+    @Override
     public Status addFirst(E e){
        return insertList(0,e);
     }
 
+    @Override
     public E removeFirst(){
         return deleteList(0);
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<>() {
+            private MyNode p=head.next;
+            @Override
+            public boolean hasNext() {
+                return p!=null;
+            }
+
+            @Override
+            public E next() {
+                E e = p.data;
+                p=p.next;
+                return e;
+            }
+        };
     }
 }

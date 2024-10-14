@@ -1,13 +1,9 @@
 package com.lordbao.impl.linkedList;
 
 import com.lordbao.utils.LinkedListInitType;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Author Lord_Bao
@@ -19,13 +15,9 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void initList(){
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new  MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
-        MyDoubleLinkedCircularList<Integer> myLinkedList2 = new  MyDoubleLinkedCircularList<>(LinkedListInitType.HEAD_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
+        MyDoubleLinkedCircularList<Integer> myLinkedList2 = new MyDoubleLinkedCircularList<>(LinkedListInitType.HEAD_INSERT, arr);
 
         System.out.println(myLinkedList1);
         System.out.println(myLinkedList2);
@@ -51,12 +43,8 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void deleteList() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new  MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
 
         System.out.println(myLinkedList1.deleteList(0));
         System.out.println(myLinkedList1.deleteList(0));
@@ -67,12 +55,8 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void locateElem() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
 
         System.out.println(myLinkedList1.locateElem(1));
         System.out.println(myLinkedList1.locateElem(-1));
@@ -80,12 +64,8 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void getElem() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
 
         System.out.println(myLinkedList1.getElem(0));
         System.out.println(myLinkedList1.getElem(3));
@@ -93,49 +73,58 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void addFirst() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
         myLinkedList1.addFirst(0);
         System.out.println(myLinkedList1);
     }
 
     @Test
     void removeFirst() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
         System.out.println(myLinkedList1.removeFirst());
         System.out.println(myLinkedList1);
     }
 
     @Test
     void addLast() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
         myLinkedList1.addLast(9);
         System.out.println(myLinkedList1);
     }
 
     @Test
     void removeLast() {
-        List<Integer> list = new ArrayList<>();
-        list.add(1);
-        list.add(3);
-        list.add(5);
-        list.add(6);
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list);
+        Integer [] arr ={1,3,5,6};
+        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
         System.out.println(myLinkedList1.removeLast());
         System.out.println(myLinkedList1);
+    }
+
+    @Test
+    void testIterator(){
+        List<Integer> list = List.of(1, 3, 5, 6);
+        //for增强循环遍历，本质还是通过迭代器遍历
+        for(Integer ele : list){
+            System.out.println(ele);
+        }
+
+        System.out.println("--------------");
+        //迭代器遍历
+        java.util.Iterator<Integer> iterator = list.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+    }
+
+    @Test
+    void testTraverse(){
+
+        MyDoubleLinkedCircularList<Integer> list = new MyDoubleLinkedCircularList<>(new Integer[]{1,3,5,6});
+        for(Integer e : list){
+            System.out.println(e);
+        }
     }
 }

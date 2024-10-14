@@ -2,14 +2,18 @@ package com.lordbao;
 
 import com.lordbao.utils.Status;
 
+import java.util.Iterator;
+
 /**
  * @Author Lord_Bao
  * @Date 2024/10/2 21:09
  * @Version 1.0
  *
  * MyList的抽象接口, 注意下标都是从0开始
- */
-public interface MyList<E> {
+  */
+
+public interface MyList<E> extends Iterable<E>{
+
 
     Status clearList();
 
@@ -39,4 +43,41 @@ public interface MyList<E> {
      * 返回下标i处的元素
      */
     E getElem(int i);
+
+    /***
+     *
+     * 添加首元素
+     */
+    default Status addFirst(E e){
+        throw new UnsupportedOperationException("addFirst is not implemented");
+    }
+
+    /***
+     *
+     * 删除首元素
+     */
+    default E removeFirst(){
+        throw new UnsupportedOperationException("removeFirst is not implemented");
+    }
+
+    /***
+     *
+     * 添加尾元素
+     */
+    default Status addLast(E e){
+        throw new UnsupportedOperationException("addLast is not implemented");
+    }
+
+    /***
+     *
+     * 删除尾元素
+     */
+    default E removeLast(){
+        throw new UnsupportedOperationException("removeLast is not implemented");
+    }
+
+    default Iterator<E> iterator(){
+        throw new UnsupportedOperationException("iterator is not implemented");
+    }
+
 }
