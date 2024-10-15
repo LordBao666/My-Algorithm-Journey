@@ -77,4 +77,12 @@ public interface MyList<E> extends Iterable<E> {
     default Iterator<E> iterator() {
         throw new UnsupportedOperationException("iterator is not implemented");
     }
+
+    default E  getFirst(){
+        return getElem(0);
+    }
+
+    default  E getLast(){
+        return getElem(listLength()-1);
+    }
 }
