@@ -13,7 +13,11 @@ import java.util.Objects;
  * @Version 1.0
  *
  * 仅支持类型为Integer的静态顺序表
+ *
+ * 下述类不建议使用，建议使用 {@link MySqlList}。
+ * 使用如下类可能会出现异常。
  */
+@Deprecated
 @Slf4j
 public class IntSqlList implements MyList<Integer> {
     private final static Integer maxSize=20;

@@ -13,7 +13,7 @@ import java.util.Objects;
  * @Author Lord_Bao
  * @Date 2024/10/11 17:31
  * @Version 1.0
- *
+ * <p>
  * 单链表
  */
 @Slf4j
@@ -65,21 +65,21 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @SuppressWarnings("unchecked")
     public MyLinkedList() {
-        this((E [])new Object[]{});
+        this((E[]) new Object[]{});
     }
 
     /***
      * 默认采用尾插法
      */
-    public MyLinkedList(E [] arr) {
+    public MyLinkedList(E[] arr) {
         this(LinkedListInitType.TAIL_INSERT, arr);
     }
 
     /**
      * @param type 尾插法还是头插法
-     * @param arr 将要插入的数据集
+     * @param arr  将要插入的数据集
      */
-    public MyLinkedList(LinkedListInitType type, E [] arr) {
+    public MyLinkedList(LinkedListInitType type, E[] arr) {
         if (type == LinkedListInitType.HEAD_INSERT) {
             headInsert(arr);
         } else if (type == LinkedListInitType.TAIL_INSERT) {
@@ -87,11 +87,59 @@ public class MyLinkedList<E> implements MyList<E> {
         }
     }
 
+    /***
+     * 默认采用尾插法
+     */
+    public MyLinkedList(MyList<E> list) {
+        this(LinkedListInitType.TAIL_INSERT, list);
+    }
+
     /**
-     * @param arr 将进行尾插法的arr
+     * @param type 尾插法还是头插法
+     * @param arr  将要插入的数据集
+     */
+    public MyLinkedList(LinkedListInitType type, MyList<E> arr) {
+        if (type == LinkedListInitType.HEAD_INSERT) {
+            headInsert(arr);
+        } else if (type == LinkedListInitType.TAIL_INSERT) {
+            tailInsert(arr);
+        }
+    }
+
+
+    /**
+     * @param list 将进行尾插法的list
      *             尾插建表
      */
-    private void tailInsert(E [] arr) {
+    private void tailInsert(MyList<E> list) {
+        head = new MyNode(null, null);
+        MyNode p = head;
+        for (E ele : list) {
+            MyNode temp = new MyNode(ele, null);
+            p.next = temp;
+            p = temp;
+        }
+        size = list.listLength();
+    }
+
+    /**
+     * @param list 将进行头插法的list
+     *             头插建表
+     */
+    private void headInsert(MyList<E> list) {
+        head = new MyNode(null, null);
+        for (E ele : list) {
+            head.next = new MyNode(ele, head.next);
+        }
+        size = list.listLength();
+    }
+
+
+    /**
+     * @param arr 将进行尾插法的arr
+     *            尾插建表
+     */
+    private void tailInsert(E[] arr) {
         head = new MyNode(null, null);
         MyNode p = head;
         for (E ele : arr) {
@@ -104,9 +152,9 @@ public class MyLinkedList<E> implements MyList<E> {
 
     /**
      * @param arr 将进行头插法的list
-     *             头插建表
+     *            头插建表
      */
-    private void headInsert(E [] arr) {
+    private void headInsert(E[] arr) {
         head = new MyNode(null, null);
         for (E ele : arr) {
             head.next = new MyNode(ele, head.next);
@@ -115,11 +163,10 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
 
-
     @Override
     public Status clearList() {
-        head.next=null;
-        size=0;
+        head.next = null;
+        size = 0;
         return Status.OK;
     }
 
@@ -204,28 +251,29 @@ public class MyLinkedList<E> implements MyList<E> {
     }
 
     @Override
-    public Status addFirst(E e){
-       return insertList(0,e);
+    public Status addFirst(E e) {
+        return insertList(0, e);
     }
 
     @Override
-    public E removeFirst(){
+    public E removeFirst() {
         return deleteList(0);
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<>() {
-            private MyNode p=head.next;
+            private MyNode p = head.next;
+
             @Override
             public boolean hasNext() {
-                return p!=null;
+                return p != null;
             }
 
             @Override
             public E next() {
                 E e = p.data;
-                p=p.next;
+                p = p.next;
                 return e;
             }
         };

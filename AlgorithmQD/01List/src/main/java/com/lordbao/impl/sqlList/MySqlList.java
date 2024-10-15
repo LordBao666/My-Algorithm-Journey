@@ -13,55 +13,75 @@ import java.util.Objects;
  * @Author Lord_Bao
  * @Date 2024/10/2 23:03
  * @Version 1.0
- *
+ * <p>
  * 动态顺序表,支持动态缩容和扩容，支持泛型
  */
 @Slf4j
 public class MySqlList<E> implements MyList<E> {
-    /**容量*/
-    private  int capacity=8;
-    private E [] data;
-    /**实际大小*/
+    /**
+     * 容量
+     */
+    private int capacity = 8;
+    private E[] data;
+    /**
+     * 实际大小
+     */
     private int size;
 
-    public MySqlList(){
+    //初始化片段：每个构造函数都先调用此函数
+    {
         initList();
     }
 
-    public boolean isFull(){
-        return size==capacity;
+    public MySqlList() {
+    }
+
+    public MySqlList(MyList<E> list) {
+        for (E e : list) {
+            addLast(e);
+        }
+    }
+
+    public MySqlList(E[] arr) {
+        for (E e : arr) {
+            addLast(e);
+        }
+    }
+
+    public boolean isFull() {
+        return size == capacity;
     }
 
     @SuppressWarnings("unchecked")
     public void initList() {
-        data = (E[])new Object[capacity];
-        Arrays.fill(data,null);
-        size=0;
+        data = (E[]) new Object[capacity];
+        Arrays.fill(data, null);
+        size = 0;
     }
 
     @Override
     public Status clearList() {
-        for(int i=0;i<size;i++){
+        for (int i = 0; i < size; i++) {
             /*帮助垃圾回收*/
-            data[i]=null;
+            data[i] = null;
         }
-        size=0;
+        size = 0;
         return Status.OK;
     }
 
     @Override
     public Status insertList(int i, E e) {
-        if(i<0 || i>size){
-            log.error("The position {} is out of index between 0 and {}",i,size);
+        if (i < 0 || i > size) {
+            log.error("The position {} is out of index between 0 and {}", i, size);
             return Status.OVERFLOW;
         }
-        if(isFull()){
+        if (isFull()) {
             expand();
         }
-        for(int j=size-1;j>=i;j--){
-            data[j+1]=data[j];
+        for (int j = size - 1; j >= i; j--) {
+            data[j + 1] = data[j];
         }
-        data[i]=e;
+        data[i] = e;
         size++;
         return Status.OK;
     }
@@ -69,35 +89,35 @@ public class MySqlList<E> implements MyList<E> {
     /**
      * 容量从oldCapacity 变化到 newCapacity
      * 注意，始终假定size是小于等于newCapacity
-     * */
+     */
     @SuppressWarnings("unchecked")
-    private void resize(int oldCapacity,int newCapacity){
-        log.info("The list resizes from {} to {}",oldCapacity,newCapacity);
-        log.info("The list is {}",this);
+    private void resize(int oldCapacity, int newCapacity) {
+        log.info("The list resizes from {} to {}", oldCapacity, newCapacity);
+        log.info("The list is {}", this);
 
-        E [] newData = (E [])new Object[newCapacity];
-        System.arraycopy(data,0, newData,0,size);
-        data=newData;
-        capacity=newCapacity;
+        E[] newData = (E[]) new Object[newCapacity];
+        System.arraycopy(data, 0, newData, 0, size);
+        data = newData;
+        capacity = newCapacity;
     }
 
-    private void expand(){
+    private void expand() {
         //扩容1.5倍
-        int newCapacity = capacity + (capacity>>1);
-        resize(capacity,newCapacity);
+        int newCapacity = capacity + (capacity >> 1);
+        resize(capacity, newCapacity);
     }
 
     @Override
     public E deleteList(int i) {
-        if(i<0 || i>size-1){
-            log.error("The position {} is out of index between 0 and {}",i,size-1);
+        if (i < 0 || i > size - 1) {
+            log.error("The position {} is out of index between 0 and {}", i, size - 1);
             return null;
         }
         E result = data[i];
-        for(int j=i+1;j<size;j++){
-            data[j-1]=data[j];
+        for (int j = i + 1; j < size; j++) {
+            data[j - 1] = data[j];
         }
-        data[size-1]=null;//帮助垃圾回收
+        data[size - 1] = null;//帮助垃圾回收
         size--;
         shrink();
         return result;
@@ -106,11 +126,11 @@ public class MySqlList<E> implements MyList<E> {
     /**
      * 当元素的利用率低于1/4 且 容量个数大于8个时，实行缩容策略
      * 将容量缩小为1/2.
-     * */
+     */
     private void shrink() {
-        if(size * 4 < capacity && capacity>8){
-            int newCapacity= capacity >> 1;
-            resize(capacity,newCapacity);
+        if (size * 4 < capacity && capacity > 8) {
+            int newCapacity = capacity >> 1;
+            resize(capacity, newCapacity);
         }
     }
 
@@ -121,24 +141,23 @@ public class MySqlList<E> implements MyList<E> {
 
     @Override
     public int locateElem(E e) {
-        for(int i=0;i<size;i++){
-            if(Objects.equals(data[i], e)){
+        for (int i = 0; i < size; i++) {
+            if (Objects.equals(data[i], e)) {
                 return i;
             }
         }
-        log.info("{} is not found!",e);
+        log.info("{} is not found!", e);
         return -1;
     }
 
     /**
-     *
      * 返回位置i处的元素. 注意，如果下标不对仍然会返回null
      * 因此请查看日志信息.
      */
     @Override
     public E getElem(int i) {
-        if(i<0 || i>size-1){
-            log.error("The position {} is out of index between 0 and {}",i,size-1);
+        if (i < 0 || i > size - 1) {
+            log.error("The position {} is out of index between 0 and {}", i, size - 1);
             return null;
         }
         return data[i];
@@ -146,31 +165,36 @@ public class MySqlList<E> implements MyList<E> {
 
     @Override
     public String toString() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return "MySqlList {}";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("MySqlList { ");
-        for(int i=0;i<size-1;i++){
+        for (int i = 0; i < size - 1; i++) {
             sb.append(data[i]).append(",");
         }
-        sb.append(data[size-1]).append(" }");
+        sb.append(data[size - 1]).append(" }");
         return sb.toString();
     }
 
 
-    /**时间复杂度为O(n) 效率不高*/
+    /**
+     * 时间复杂度为O(n) 效率不高
+     */
     @Override
     public Status addFirst(E e) {
-        return insertList(0,e);
+        return insertList(0, e);
     }
 
     @Override
     public Status addLast(E e) {
-        return insertList(size,e);
+        return insertList(size, e);
     }
-    /**时间复杂度为O(n) 效率不高*/
+
+    /**
+     * 时间复杂度为O(n) 效率不高
+     */
     @Override
     public E removeFirst() {
         return deleteList(0);
@@ -178,7 +202,7 @@ public class MySqlList<E> implements MyList<E> {
 
     @Override
     public E removeLast() {
-        return deleteList(size-1);
+        return deleteList(size - 1);
     }
 
     @Override

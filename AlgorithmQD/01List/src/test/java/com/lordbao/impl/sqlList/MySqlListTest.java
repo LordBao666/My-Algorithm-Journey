@@ -22,6 +22,16 @@ class MySqlListTest {
     }
 
     @Test
+    void  initList(){
+        list = new MySqlList<>(new Integer[]{1,3,5});
+        System.out.println(list);
+
+        list = new MySqlList<>(list);
+        System.out.println(list);
+    }
+
+
+    @Test
     void insertList() {
 
         list = new MySqlList<>();

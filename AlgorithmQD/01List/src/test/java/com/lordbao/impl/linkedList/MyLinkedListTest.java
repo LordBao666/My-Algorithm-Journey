@@ -18,11 +18,17 @@ class MyLinkedListTest {
     @Test
     void initList(){
         Integer [] arr ={1,3,5,6};
-        MyLinkedList<Integer> myLinkedList1 = new MyLinkedList<>(LinkedListInitType.TAIL_INSERT, arr);
-        MyLinkedList<Integer> myLinkedList2 = new MyLinkedList<>(LinkedListInitType.HEAD_INSERT, arr);
+        MyLinkedList<Integer> list1 = new MyLinkedList<>(LinkedListInitType.TAIL_INSERT, arr);
+        MyLinkedList<Integer> list2 = new MyLinkedList<>(LinkedListInitType.HEAD_INSERT, arr);
 
-        System.out.println(myLinkedList1);
-        System.out.println(myLinkedList2);
+        System.out.println(list1);
+        System.out.println(list2);
+
+
+        MyLinkedList<Integer> list3 = new MyLinkedList<>(LinkedListInitType.TAIL_INSERT, list1);
+        MyLinkedList<Integer> list4 = new MyLinkedList<>(LinkedListInitType.HEAD_INSERT, list1);
+        System.out.println(list3);
+        System.out.println(list4);
     }
 
     @Test

@@ -15,12 +15,18 @@ class MyDoubleLinkedCircularListTest {
 
     @Test
     void initList(){
+        //测试参数类型为 E [] 的有参构造函数
         Integer [] arr ={1,3,5,6};
-        MyDoubleLinkedCircularList<Integer> myLinkedList1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
-        MyDoubleLinkedCircularList<Integer> myLinkedList2 = new MyDoubleLinkedCircularList<>(LinkedListInitType.HEAD_INSERT, arr);
+        MyDoubleLinkedCircularList<Integer> list1 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, arr);
+        MyDoubleLinkedCircularList<Integer> list2 = new MyDoubleLinkedCircularList<>(LinkedListInitType.HEAD_INSERT, arr);
+        System.out.println(list1);
+        System.out.println(list2);
 
-        System.out.println(myLinkedList1);
-        System.out.println(myLinkedList2);
+        //测试参数类型为 MyList 的 有参构造函数
+        MyDoubleLinkedCircularList<Integer> list3 = new MyDoubleLinkedCircularList<>(LinkedListInitType.TAIL_INSERT, list1);
+        MyDoubleLinkedCircularList<Integer> list4 = new MyDoubleLinkedCircularList<>(LinkedListInitType.HEAD_INSERT, list1);
+        System.out.println(list3);
+        System.out.println(list4);
     }
 
 
@@ -103,25 +109,9 @@ class MyDoubleLinkedCircularListTest {
         System.out.println(myLinkedList1);
     }
 
-    @Test
-    void testIterator(){
-        List<Integer> list = List.of(1, 3, 5, 6);
-        //for增强循环遍历，本质还是通过迭代器遍历
-        for(Integer ele : list){
-            System.out.println(ele);
-        }
-
-        System.out.println("--------------");
-        //迭代器遍历
-        java.util.Iterator<Integer> iterator = list.iterator();
-        while (iterator.hasNext()){
-            System.out.println(iterator.next());
-        }
-    }
 
     @Test
     void testTraverse(){
-
         MyDoubleLinkedCircularList<Integer> list = new MyDoubleLinkedCircularList<>(new Integer[]{1,3,5,6});
         for(Integer e : list){
             System.out.println(e);
