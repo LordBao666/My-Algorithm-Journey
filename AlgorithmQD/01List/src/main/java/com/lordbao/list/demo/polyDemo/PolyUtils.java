@@ -1,7 +1,7 @@
-package com.lordbao.demo.polyDemo;
+package com.lordbao.list.demo.polyDemo;
 
 
-import com.lordbao.impl.sqlList.MySqlList;
+import com.lordbao.list.impl.sqlList.MySqlList;
 
 /**
  * @Author Lord_Bao

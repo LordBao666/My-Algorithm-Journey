@@ -1,9 +1,7 @@
-package com.lordbao.demo.polyDemo;
+package com.lordbao.list.demo.polyDemo;
 
-import com.lordbao.impl.sqlList.MySqlList;
+import com.lordbao.list.impl.sqlList.MySqlList;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Author Lord_Bao

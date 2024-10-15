@@ -1,4 +1,4 @@
-package com.lordbao.demo.polyDemo;
+package com.lordbao.list.demo.polyDemo;
 
 
 import lombok.AllArgsConstructor;

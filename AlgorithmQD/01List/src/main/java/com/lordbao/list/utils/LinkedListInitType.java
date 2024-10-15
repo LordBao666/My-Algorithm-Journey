@@ -1,4 +1,4 @@
-package com.lordbao.utils;
+package com.lordbao.list.utils;
 
 
 /**

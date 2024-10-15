@@ -1,9 +1,6 @@
-package com.lordbao.impl.sqlList;
+package com.lordbao.list.impl.sqlList;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @Author Lord_Bao

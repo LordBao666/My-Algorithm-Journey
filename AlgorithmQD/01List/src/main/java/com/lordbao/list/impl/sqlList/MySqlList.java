@@ -1,8 +1,8 @@
-package com.lordbao.impl.sqlList;
+package com.lordbao.list.impl.sqlList;
 
 
-import com.lordbao.MyList;
-import com.lordbao.utils.Status;
+import com.lordbao.list.MyList;
+import com.lordbao.list.utils.Status;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;

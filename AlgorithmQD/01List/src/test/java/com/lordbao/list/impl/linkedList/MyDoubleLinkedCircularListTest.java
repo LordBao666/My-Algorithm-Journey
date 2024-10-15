@@ -1,9 +1,7 @@
-package com.lordbao.impl.linkedList;
+package com.lordbao.list.impl.linkedList;
 
-import com.lordbao.utils.LinkedListInitType;
+import com.lordbao.list.utils.LinkedListInitType;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 /**
  * @Author Lord_Bao

@@ -1,9 +1,9 @@
-package com.lordbao.utils;
+package com.lordbao.list.utils;
 
-import com.lordbao.MyList;
-import com.lordbao.impl.linkedList.MyDoubleLinkedCircularList;
-import com.lordbao.impl.linkedList.MyLinkedList;
-import com.lordbao.impl.sqlList.MySqlList;
+import com.lordbao.list.MyList;
+import com.lordbao.list.impl.linkedList.MyDoubleLinkedCircularList;
+import com.lordbao.list.impl.linkedList.MyLinkedList;
+import com.lordbao.list.impl.sqlList.MySqlList;
 import org.junit.jupiter.api.Test;
 
 /**
