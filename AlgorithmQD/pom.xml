@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>01List</module>
+        <module>02StackAndQueue</module>
     </modules>
 
     <properties>
