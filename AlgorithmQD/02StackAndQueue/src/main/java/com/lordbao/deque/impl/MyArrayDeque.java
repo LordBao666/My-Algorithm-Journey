@@ -54,7 +54,7 @@ public class MyArrayDeque<E> extends MyAbstractDeque<E> {
     }
 
     @SuppressWarnings("unchecked")
-    private void resize(int oldCapacity, int newCapacity) {
+    private void resize(int newCapacity) {
         E[] newData = (E[]) new Object[newCapacity];
         //p,q分别指向data 和 newData的首元素
         int p = (head + 1) % capacity;
@@ -77,7 +77,7 @@ public class MyArrayDeque<E> extends MyAbstractDeque<E> {
         if (isFull()) {
             //按照1.5 倍进行扩容
             int newCapacity = capacity + (capacity >> 1);
-            resize(capacity, newCapacity);
+            resize(newCapacity);
         }
     }
 
@@ -103,14 +103,14 @@ public class MyArrayDeque<E> extends MyAbstractDeque<E> {
         //如果有效占比小于 .25 并且 容量大于8,则 缩容一半
         if (size * 4 < capacity && capacity > 8) {
             int newCapacity = (capacity >> 1);
-            resize(capacity, newCapacity);
+            resize(newCapacity);
         }
     }
 
     @Override
     public E removeFirst() {
         if (isEmpty()) {
-            String error = "removeFirst FAILED! " + getClass().getSimpleName() + " is EMPTY!!!";
+            String error = "FAILED! " + getClass().getSimpleName() + " is EMPTY!!!";
             log.error(error);
             throw new IllegalStateException(error);
         }
@@ -127,7 +127,7 @@ public class MyArrayDeque<E> extends MyAbstractDeque<E> {
     @Override
     public E removeLast() {
         if (isEmpty()) {
-            String error = "removeLast FAILED! " + getClass().getSimpleName() + " is EMPTY!!!";
+            String error = "FAILED! " + getClass().getSimpleName() + " is EMPTY!!!";
             log.error(error);
             throw new IllegalStateException(error);
         }
@@ -147,8 +147,13 @@ public class MyArrayDeque<E> extends MyAbstractDeque<E> {
 
     @Override
     public E get(int i) {
-        if (i < 0 || i >= size()) {
-            String error = "get FAILED! " + "index is not between 0 and " + (size - 1);
+        if (isEmpty()) {
+            String error = "FAILED! " + getClass().getSimpleName() + " is EMPTY!!!";
+            log.error(error);
+            throw new IndexOutOfBoundsException(error);
+        }
+        if (i < 0 || i >= size) {
+            String error = "FAILED! " + "index is not between 0 and " + (size - 1);
             log.error(error);
             throw new IndexOutOfBoundsException(error);
         }
