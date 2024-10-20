@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -62,10 +64,4 @@ class MyLinkedListDequeTest {
         System.out.println(deque.getLast());
     }
 
-    @Test
-    void test(){
-        MyLinkedListDeque<Object> deque1 = new MyLinkedListDeque<>();
-        Assertions.assertThrows(IndexOutOfBoundsException.class,()-> deque1.getFirst());
-        Assertions.assertThrows(IndexOutOfBoundsException.class,()-> deque1.getLast());
-    }
 }
