@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>01Array</module>
+        <module>02String</module>
     </modules>
 
     <properties>
