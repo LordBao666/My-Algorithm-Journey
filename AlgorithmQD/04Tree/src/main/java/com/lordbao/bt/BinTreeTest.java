@@ -11,10 +11,10 @@ public class BinTreeTest {
     public static void main(String[] args) {
         Character [] data = {'a','b','f','c','d','g',null,null,null,'e',null,null,'h',null,null,null,null};
         BinTree<Character> tree = new BinTree<>(data);
-        tree.preOrderTraverse();
-        tree.inOrderTraverse();
+//        tree.preOrderTraverse();
+//        tree.inOrderTraverse();
         tree.postOrderTraverse();
-        tree.layerTraverse();
+//        tree.layerTraverse();
         System.out.println(tree.height());
         System.out.println(tree.size());
         System.out.println(tree.leaves());
