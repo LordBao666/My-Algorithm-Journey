@@ -12,13 +12,6 @@ public class BinTree {
 
     private TreeNode root;
 
-    public static class TreeNode {
-        private TreeNode left;
-        private TreeNode right;
-        private int data;
-    }
-
-
 
 
     /*--------------------------先序遍历非递归版本(开始)-------------------------------- */
@@ -35,7 +28,7 @@ public class BinTree {
         while (!stack.isEmpty()) {
             TreeNode t = stack.pop();
             //访问节点
-            System.out.println(t.data);
+            System.out.println(t.val);
             if (t.right != null) {
                 stack.push(t.right);
             }
@@ -71,7 +64,7 @@ public class BinTree {
         stackLeft(node, stack);
         while (!stack.isEmpty()) {
             TreeNode p = stack.pop();
-            System.out.println(p.data);//访问当前节点
+            System.out.println(p.val);//访问当前节点
             stackLeft(p.right, stack);//处理右子树左侧分支
         }
     }
@@ -99,7 +92,7 @@ public class BinTree {
             }else {
                 // 左右子树都已访问，访问当前节点
                 stack.pop();
-                System.out.println(p.data);
+                System.out.println(p.val);
                 pre=p;//更新pre
             }
         }
