@@ -130,7 +130,7 @@ public class MyArrayDeque<E> implements MyDeque<E> {
     @Override
     public E pollFirst() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return null;
         }
         head = (head + 1) % capacity;
         E ans = arr[head];
@@ -158,7 +158,7 @@ public class MyArrayDeque<E> implements MyDeque<E> {
     @Override
     public E pollLast() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return null;
         }
         tail = (tail - 1 + capacity) % capacity;
         E ans = arr[tail];
@@ -175,7 +175,7 @@ public class MyArrayDeque<E> implements MyDeque<E> {
     @Override
     public E peekFirst() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return null;
         }
         return arr[(head + 1) % capacity];
     }
@@ -183,7 +183,7 @@ public class MyArrayDeque<E> implements MyDeque<E> {
     @Override
     public E peekLast() {
         if (isEmpty()) {
-            throw new NoSuchElementException();
+            return null;
         }
         return arr[(tail - 1 + capacity) % capacity];
     }
