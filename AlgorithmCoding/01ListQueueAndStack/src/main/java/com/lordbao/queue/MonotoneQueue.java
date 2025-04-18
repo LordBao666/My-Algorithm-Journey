@@ -1,4 +1,4 @@
-package com.lordbao.stack;
+package com.lordbao.queue;
 
 
 import java.util.LinkedList;
