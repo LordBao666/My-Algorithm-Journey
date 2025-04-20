@@ -1,130 +1,125 @@
 package com.lordbao.tree.heap;
 
+
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
 /**
- * 大根堆
+ * @Author Lord_Bao
+ * @Date 2025/4/20 11:54
+ * @Version 1.0
+ * 针对int的大根堆
  */
 public class MaxHeap {
-
     private int size;
+    private int[] nums;
+    private static final int DEFAULT_CAPACITY = 11;
 
-    private final double[] nums;
-    private int capacity;
+    public MaxHeap() {
+        nums = new int[DEFAULT_CAPACITY];
+        size = 0;
+    }
 
-    //根据nums构建大根堆
-    //会存储nums的2倍容量,即1倍用于其他元素的扩充,也就是这是一个静态数组
-    //暂时不考虑扩容的事
-    public MaxHeap(double[] nums) {
-        this.nums = new double[(nums.length<<1)];
-        for (int i = 0; i < nums.length; i++) {
-            this.nums[i] = nums[i];
+    public MaxHeap(int capacity) {
+        if (capacity < 1) {
+            throw new IllegalArgumentException("容量不能为0或负数");
         }
+        nums = new int[capacity];
+        size = 0;
+    }
+
+    public MaxHeap(int[] arr) {
+        if (arr == null || arr.length == 0) {
+            nums = new int[DEFAULT_CAPACITY];
+            size = 0;
+            return;
+        }
+        nums = Arrays.copyOf(arr, arr.length);
         size = nums.length;
-        capacity=(nums.length<<1);
         heapify();
     }
 
 
-    //根据nums构建大根堆
     private void heapify() {
-        //从最后一个非叶节点开始下潜
-        for (int i = ((size >> 1) - 1); i >= 0; i--) {
-            siftDown(i);
+        //从最后一个非叶节点进行下潜
+        for (int i = (size >> 1) - 1; i >= 0; i--) {
+            siftDown(i, nums[i], nums, size);
         }
     }
 
-    //暂时不考虑越界问题
-    public void offer(double ele){
-        nums[size]=ele;
-        //size++ 在siftUp 后面执行是可以的,因为siftUp
-        //函数并没有涉及size
-        siftUp(size);
+
+    /**
+     * 从index开始, 限定nums的前n个元素,将ele进行下潜
+     */
+    private static void siftDown(int index, int ele, int[] nums, int n) {
+        int firstLeaf = n >> 1;//第1个叶子节点
+        while (index < firstLeaf) {
+            int childIndex = (index << 1) + 1;
+            int child = nums[childIndex];
+            if (childIndex + 1 < n && nums[childIndex + 1] > child) {//右孩子存在 并且更大
+                childIndex = childIndex + 1;
+                child = nums[childIndex];
+            }
+            if (ele < child) {//ele更小,那么继续下潜
+                nums[index] = child;
+                index = childIndex;
+            } else {
+                break;
+            }
+        }
+        nums[index] = ele;
+    }
+
+    public boolean offer(int ele) {
+        if (size >= nums.length) {
+            grow();
+        }
+        siftUp(size, ele, nums);
         size++;
+        return true;
     }
 
-    //暂时不考虑size=0 调用此函数的问题
-    public double poll(){
-        double ans = nums[0];
-        swap(0,size-1);
-        //注意先size--,再siftDown
-        size--;
-        siftDown(0);
-        return ans;
+    /**
+     * 以index为基准,将ele进行上浮
+     */
+    private void siftUp(int index, int ele, int[] nums) {
+        while (index > 0) {
+            int parentIndex = (index - 1) >> 1;
+            int parent = nums[parentIndex];
+            if (ele > parent) {//如果ele 更大,那么需要继续上浮
+                nums[index] = parent;
+                index = parentIndex;
+            } else {
+                break;
+            }
+        }
+        nums[index] = ele;
     }
 
-    //暂时不考虑size=0 调用此函数的问题
-    public double peek(){
+    private void grow() {
+        int newCapacity = nums.length < 64 ? nums.length + 2 : nums.length + (nums.length >> 1);
+        nums = Arrays.copyOf(nums, newCapacity);
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
+        }
         return nums[0];
     }
 
-    public boolean isEmpty(){
-        return size==0;
-    }
-
-    //下标为i的节点是否存在左孩子
-    private boolean isLeftChildExist(int i) {
-        //i*2+1<size
-        return ((i << 1) + 1) < size;
-    }
-
-    //下标为i的节点是否存在右孩子
-    private boolean isRightChildExist(int i) {
-        //i*2+2<size
-        return ((i << 1) + 2) < size;
-    }
-
-    //将坐标i的元素进行siftDown
-    private void siftDown(int i) {
-        while (i < size) {
-            if (isLeftChildExist(i)) {
-                double curVal = nums[i];
-                double leftChildVal = nums[((i << 1) + 1)];
-                double maxChildVal = leftChildVal;
-
-                if (isRightChildExist(i)) {
-                    double rightChildVal = nums[((i << 1) + 2)];
-                    if (leftChildVal < rightChildVal) {
-                        maxChildVal = rightChildVal;
-                    }
-                }
-
-                if (curVal < maxChildVal) {
-                    if (maxChildVal == leftChildVal) {
-                        swap(i, ((i << 1) + 1));
-                        i = ((i << 1) + 1);//继续下潜
-                    } else {//maxChildVal==rightChildVal
-                        swap(i, ((i << 1) + 2));
-                        i = ((i << 1) + 2);//继续下潜
-                    }
-                } else {
-                    break;
-                }
-            } else {
-                break;
-            }
-
+    public int poll() {
+        if (isEmpty()) {
+            throw new NoSuchElementException();
         }
+        int ans = nums[0];
+        nums[0] = nums[size - 1];
+        siftDown(0, nums[0], nums, size - 1);
+        size--;
+        return ans;
     }
 
-
-
-
-    //将坐标i的元素进行siftUp
-    private void siftUp(int i) {
-        while (i > 0) {
-            int parentIndex = (i - 1) >> 1;
-            if (nums[i] > nums[parentIndex]) {
-                swap(i, parentIndex);
-            } else {
-                break;
-            }
-            i = parentIndex;
-        }
+    public boolean isEmpty() {
+        return size == 0;
     }
-
-    private void swap(int i, int j) {
-        double temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-    }
-
 }
