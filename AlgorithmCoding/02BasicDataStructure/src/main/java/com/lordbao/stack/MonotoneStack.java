@@ -16,6 +16,8 @@ import java.io.*;
  *
  *
  * 下面是采用静态数组实现的栈,当然,也可以用JDK提供的栈
+ *
+ * 另外一个解法 参见 {@link MonotoneStack2}
  */
 public class MonotoneStack {
 
